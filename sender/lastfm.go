@@ -2,8 +2,8 @@ package sender
 
 import (
 	"github.com/polidog/go-itunes"
-	"github.com/shkh/lastfm-go/lastfm"
 	"github.com/polidog/go-nowplaying/config"
+	"github.com/shkh/lastfm-go/lastfm"
 	"time"
 )
 

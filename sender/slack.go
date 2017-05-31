@@ -1,15 +1,15 @@
 package sender
 
 import (
-	"github.com/polidog/go-itunes"
-	"net/url"
-	"net/http"
-	"fmt"
 	"bytes"
+	"fmt"
+	"github.com/polidog/go-itunes"
+	"net/http"
+	"net/url"
 )
 
 type Slack struct {
-	Token string
+	Token   string
 	Channel string
 }
 
@@ -19,12 +19,12 @@ func (s Slack) Send(track itunes.Track) error {
 
 	data := url.Values{}
 	data.Set("token", s.Token)
-	data.Add("channel",s.Channel)
+	data.Add("channel", s.Channel)
 	data.Add("username", "NowPlaying") // TODO config
-	data.Add("text", "NowPlaying:" + track.Name + " by " + track.Artist + " from " + track.Artist)
+	data.Add("text", "NowPlaying:"+track.Name+" by "+track.Artist+" from "+track.Artist)
 
 	client := &http.Client{}
-	r, _ := http.NewRequest("POST",  fmt.Sprintf("%s",apiUrl), bytes.NewBufferString(data.Encode()))
+	r, _ := http.NewRequest("POST", fmt.Sprintf("%s", apiUrl), bytes.NewBufferString(data.Encode()))
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	_, err := client.Do(r)
@@ -36,7 +36,7 @@ func (s Slack) Send(track itunes.Track) error {
 
 func NesSlackSender(token string, channel string) Sender {
 	return Slack{
-		Token: token,
+		Token:   token,
 		Channel: channel,
 	}
 }

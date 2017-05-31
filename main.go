@@ -8,7 +8,14 @@ import (
 )
 
 func main() {
-	filename := os.Args[1]
+	var filename string
+
+	if len(os.Args) != 2 {
+		filename = "~/.nowplaying.toml"
+	} else {
+		filename = os.Args[1]
+	}
+
 
 	config := config.NewConfig(filename)
 	watcher := itunes.NewWatcher(300)
