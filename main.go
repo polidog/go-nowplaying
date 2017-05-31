@@ -18,7 +18,7 @@ func main() {
 
 	config := config.NewConfig(filename)
 	watcher := itunes.NewWatcher(300)
-	slack := sender.NesSlackSender(config.Slack.Token, config.Slack.Channel)
+	slack := sender.NesSlackSender(config.Slack)
 	lastfm := sender.NewLastfmSender(config.Lastfm)
 	for {
 		if watcher.Watch() {

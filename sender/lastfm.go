@@ -45,6 +45,7 @@ func NewLastfmSender(config config.Lastfm) Sender {
 	if err == nil {
 		sender.isLogin = true
 	}
+	sender.api = *api
 
 	return sender
 
