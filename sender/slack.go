@@ -6,6 +6,7 @@ import (
 	"github.com/polidog/go-itunes"
 	"net/http"
 	"net/url"
+	"github.com/polidog/go-nowplaying/config"
 )
 
 type Slack struct {
@@ -16,6 +17,10 @@ type Slack struct {
 var apiUrl = "https://slack.com/api/chat.postMessage"
 
 func (s Slack) Send(track itunes.Track) error {
+
+	if len(s.Token) == 0 || len(s.Channel) == 0 {
+		return nil
+	}
 
 	data := url.Values{}
 	data.Set("token", s.Token)
@@ -34,9 +39,9 @@ func (s Slack) Send(track itunes.Track) error {
 	return nil
 }
 
-func NesSlackSender(token string, channel string) Sender {
+func NesSlackSender(slack config.Slack) Sender {
 	return Slack{
-		Token:   token,
-		Channel: channel,
+		Token:   slack.Token,
+		Channel: slack.Channel,
 	}
 }

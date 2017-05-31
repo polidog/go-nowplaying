@@ -9,9 +9,15 @@ import (
 
 type Lastfm struct {
 	api lastfm.Api
+	isLogin bool
 }
 
 func (l Lastfm) Send(track itunes.Track) error {
+
+	if l.isLogin == false {
+		return nil
+	}
+
 	p := lastfm.P{"artist": track.Artist, "track": track.Name, "album": track.Album}
 	_, err := l.api.Track.UpdateNowPlaying(p)
 	if err != nil {
@@ -30,13 +36,16 @@ func (l Lastfm) Send(track itunes.Track) error {
 }
 
 func NewLastfmSender(config config.Lastfm) Sender {
-	api := lastfm.New(config.ApiKey, config.ApiSecret)
-	err := api.Login(config.Username, config.Password)
-	if err != nil {
-		panic(err)
+	sender := Lastfm{
+		isLogin: false,
 	}
 
-	return Lastfm{
-		api: *api,
+	api := lastfm.New(config.ApiKey, config.ApiSecret)
+	err := api.Login(config.Username, config.Password)
+	if err == nil {
+		sender.isLogin = true
 	}
+
+	return sender
+
 }
