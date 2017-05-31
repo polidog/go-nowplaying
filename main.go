@@ -16,7 +16,6 @@ func main() {
 		filename = os.Args[1]
 	}
 
-
 	config := config.NewConfig(filename)
 	watcher := itunes.NewWatcher(300)
 	slack := sender.NesSlackSender(config.Slack.Token, config.Slack.Channel)
