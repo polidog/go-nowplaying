@@ -3,6 +3,7 @@ package track
 import (
 	"github.com/polidog/go-itunes"
 	"github.com/mattn/itunes-search-api"
+	"fmt"
 )
 
 type Track struct {
@@ -11,10 +12,19 @@ type Track struct {
 	Url string
 }
 
-func (t *Track) GetImageAndUrl(country string) {
+var cache = newCache()
 
-	res,err := itunessearch.Search(t.Artist + " " + t.Album, country, "music")
+func (t *Track) GetImageAndUrl(country string) {
 	t.Image = "https://raw.githubusercontent.com/polidog/go-nowplaying/master/gopher.png"
+	cacheKey := t.searchWord() + country
+
+	if cache.isKey(cacheKey) {
+		cache.bind(t)
+		return
+	}
+
+	res,err := itunessearch.Search(t.searchWord(), country, "music")
+
 	if err != nil {
 		return
 	}
@@ -25,15 +35,19 @@ func (t *Track) GetImageAndUrl(country string) {
 
 	for _, result := range res {
 		if result.CollectionName == t.Album {
-			t.Image = result.ArtworkUrl60
-			t.Url = result.CollectionViewUrl
+			cache.set(cacheKey, result)
+			cache.bind(t)
 			return
 		}
 	}
-
-	t.Image = res[0].ArtworkUrl60
-	t.Url = res[0].CollectionViewUrl
+	cache.set(cacheKey, res[0])
+	cache.bind(t)
 }
+
+func (t Track) searchWord() string {
+	return fmt.Sprintf("%s %s", t.Artist, t.Album)
+}
+
 
 func NewTrack(track itunes.Track) Track {
 	return Track{

@@ -25,7 +25,7 @@ func (s Slack) Send(track track.Track) error {
 	data := url.Values{}
 	data.Set("token", s.Token)
 	data.Add("channel", s.Channel)
-	data.Add("username", "NowPlaying - " + track.Artist) // TODO config
+	data.Add("username", fmt.Sprintf("%s - %s", track.Artist, track.Album)) // TODO config
 	data.Add("icon_url", track.Image)
 
 	data.Add("text", createText(track))

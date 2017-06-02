@@ -25,7 +25,7 @@ func main() {
 		return
 	}
 
-	watcher := itunes.NewWatcher(3000)
+	watcher := itunes.NewWatcher(5000)
 	slack := sender.NesSlackSender(config.Slack)
 	lastfm := sender.NewLastfmSender(config.Lastfm)
 
