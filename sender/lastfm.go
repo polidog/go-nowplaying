@@ -1,10 +1,10 @@
 package sender
 
 import (
-	"github.com/polidog/go-itunes"
 	"github.com/polidog/go-nowplaying/config"
 	"github.com/shkh/lastfm-go/lastfm"
 	"time"
+	"github.com/polidog/go-nowplaying/track"
 )
 
 type Lastfm struct {
@@ -12,7 +12,7 @@ type Lastfm struct {
 	isLogin bool
 }
 
-func (l Lastfm) Send(track itunes.Track) error {
+func (l Lastfm) Send(track track.Track) error {
 
 	if l.isLogin == false {
 		return nil

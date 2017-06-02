@@ -7,7 +7,9 @@ import (
 type Config struct {
 	Slack  Slack
 	Lastfm Lastfm
+	Country string `toml:"country"`
 	isLoad bool
+
 }
 
 func (c *Config) Load(filename string) error {
@@ -21,10 +23,11 @@ func (c *Config) Load(filename string) error {
 	return nil
 }
 
-func NewConfig(filename string) Config {
+func NewConfig(filename string) (Config, error) {
 	config := Config{
 		isLoad: false,
+		Country: "US",
 	}
-	config.Load(filename)
-	return config
+	err := config.Load(filename)
+	return config, err
 }

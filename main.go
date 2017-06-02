@@ -5,6 +5,9 @@ import (
 	"github.com/polidog/go-nowplaying/config"
 	"github.com/polidog/go-nowplaying/sender"
 	"os"
+	"log"
+	"github.com/polidog/go-nowplaying/track"
+	"fmt"
 )
 
 func main() {
@@ -16,14 +19,23 @@ func main() {
 		filename = os.Args[1]
 	}
 
-	config := config.NewConfig(filename)
-	watcher := itunes.NewWatcher(300)
+	config,err := config.NewConfig(filename)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	watcher := itunes.NewWatcher(3000)
 	slack := sender.NesSlackSender(config.Slack)
 	lastfm := sender.NewLastfmSender(config.Lastfm)
+
 	for {
 		if watcher.Watch() {
-			go slack.Send(watcher.Track)
-			go lastfm.Send(watcher.Track)
+			fmt.Println(watcher.Track)
+			t := track.NewTrack(watcher.Track)
+			t.GetImageAndUrl(config.Country)
+			go slack.Send(t)
+			go lastfm.Send(t)
 		}
 	}
 }

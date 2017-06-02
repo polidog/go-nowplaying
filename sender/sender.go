@@ -1,7 +1,9 @@
 package sender
 
-import "github.com/polidog/go-itunes"
+import (
+	"github.com/polidog/go-nowplaying/track"
+)
 
 type Sender interface {
-	Send(track itunes.Track) error
+	Send(track track.Track) error
 }
