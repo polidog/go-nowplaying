@@ -7,13 +7,14 @@ import (
 	"os"
 	"log"
 	"github.com/polidog/go-nowplaying/track"
+	"runtime"
 )
 
 func main() {
 	var filename string
 
 	if len(os.Args) != 2 {
-		filename = "~/.nowplaying.toml"
+		filename = homeDir() + "/.nowplaying.toml"
 	} else {
 		filename = os.Args[1]
 	}
@@ -36,4 +37,15 @@ func main() {
 			go lastfm.Send(t)
 		}
 	}
+}
+
+func homeDir() string {
+	if runtime.GOOS == "windows" {
+		home := os.Getenv("HOMEDRIVE") + os.Getenv("HOMEPATH")
+		if home == "" {
+			home = os.Getenv("USERPROFILE")
+		}
+		return home
+	}
+	return os.Getenv("HOME")
 }
