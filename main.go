@@ -7,7 +7,6 @@ import (
 	"os"
 	"log"
 	"github.com/polidog/go-nowplaying/track"
-	"fmt"
 )
 
 func main() {
@@ -31,7 +30,6 @@ func main() {
 
 	for {
 		if watcher.Watch() {
-			fmt.Println(watcher.Track)
 			t := track.NewTrack(watcher.Track)
 			t.GetImageAndUrl(config.Country)
 			go slack.Send(t)
