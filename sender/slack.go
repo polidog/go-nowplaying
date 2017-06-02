@@ -26,12 +26,7 @@ func (s Slack) Send(track track.Track) error {
 	data.Set("token", s.Token)
 	data.Add("channel", s.Channel)
 	data.Add("username", "NowPlaying - " + track.Artist) // TODO config
-
-	if len(track.Image) > 0 {
-		data.Add("icon_url", track.Image)
-	} else {
-		data.Add("icon_url", "https://raw.githubusercontent.com/polidog/go-nowplaying/master/gopher.png")
-	}
+	data.Add("icon_url", track.Image)
 
 	data.Add("text", createText(track))
 
@@ -55,8 +50,8 @@ func NesSlackSender(slack config.Slack) Sender {
 
 func createText(track track.Track) string {
 	if len(track.Url) > 0 {
-		return fmt.Sprintf("%s from <%s|%s>",track.Name, track.Url, track.Album)
+		return fmt.Sprintf("*%s* from <%s|%s>",track.Name, track.Url, track.Album)
 	} else {
-		return fmt.Sprintf("%s from %s", track.Name, track.Album)
+		return fmt.Sprintf("*%s* from %s", track.Name, track.Album)
 	}
 }
