@@ -30,7 +30,7 @@ func (s Slack) Send(track track.Track) error {
 	if len(track.Image) > 0 {
 		data.Add("icon_url", track.Image)
 	} else {
-		data.Add("icon_url", "https://github.com/polidog/go-nowplaying/gopher.png")
+		data.Add("icon_url", "https://raw.githubusercontent.com/polidog/go-nowplaying/master/gopher.png")
 	}
 
 	data.Add("text", createText(track))
