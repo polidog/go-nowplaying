@@ -2,13 +2,13 @@ package sender
 
 import (
 	"github.com/polidog/go-nowplaying/config"
+	"github.com/polidog/go-nowplaying/track"
 	"github.com/shkh/lastfm-go/lastfm"
 	"time"
-	"github.com/polidog/go-nowplaying/track"
 )
 
 type Lastfm struct {
-	api lastfm.Api
+	api     lastfm.Api
 	isLogin bool
 }
 

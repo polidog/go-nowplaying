@@ -4,9 +4,9 @@ import (
 	"github.com/polidog/go-itunes"
 	"github.com/polidog/go-nowplaying/config"
 	"github.com/polidog/go-nowplaying/sender"
-	"os"
-	"log"
 	"github.com/polidog/go-nowplaying/track"
+	"log"
+	"os"
 	"runtime"
 )
 
@@ -19,7 +19,7 @@ func main() {
 		filename = os.Args[1]
 	}
 
-	config,err := config.NewConfig(filename)
+	config, err := config.NewConfig(filename)
 	if err != nil {
 		log.Fatal(err)
 		return

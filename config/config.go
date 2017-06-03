@@ -5,11 +5,10 @@ import (
 )
 
 type Config struct {
-	Slack  Slack
-	Lastfm Lastfm
+	Slack   Slack
+	Lastfm  Lastfm
 	Country string `toml:"country"`
-	isLoad bool
-
+	isLoad  bool
 }
 
 func (c *Config) Load(filename string) error {
@@ -25,7 +24,7 @@ func (c *Config) Load(filename string) error {
 
 func NewConfig(filename string) (Config, error) {
 	config := Config{
-		isLoad: false,
+		isLoad:  false,
 		Country: "US",
 	}
 	err := config.Load(filename)

@@ -3,10 +3,10 @@ package sender
 import (
 	"bytes"
 	"fmt"
-	"net/http"
-	"net/url"
 	"github.com/polidog/go-nowplaying/config"
 	"github.com/polidog/go-nowplaying/track"
+	"net/http"
+	"net/url"
 )
 
 type Slack struct {
@@ -50,7 +50,7 @@ func NesSlackSender(slack config.Slack) Sender {
 
 func createText(track track.Track) string {
 	if len(track.Url) > 0 {
-		return fmt.Sprintf("*%s* from <%s|%s>",track.Name, track.Url, track.Album)
+		return fmt.Sprintf("*%s* from <%s|%s>", track.Name, track.Url, track.Album)
 	} else {
 		return fmt.Sprintf("*%s* from %s", track.Name, track.Album)
 	}
