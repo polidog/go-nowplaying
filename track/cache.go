@@ -6,8 +6,8 @@ import (
 
 type apiCache struct {
 	image string
-	url string
-	key string
+	url   string
+	key   string
 }
 
 func (a apiCache) isKey(key string) bool {
