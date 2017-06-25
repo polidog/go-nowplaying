@@ -8,6 +8,7 @@ type Config struct {
 	Slack   Slack
 	Lastfm  Lastfm
 	Country string `toml:"country"`
+	Time    int    `toml:"time"`
 	isLoad  bool
 }
 
@@ -26,6 +27,7 @@ func NewConfig(filename string) (Config, error) {
 	config := Config{
 		isLoad:  false,
 		Country: "US",
+		Time:    5000,
 	}
 	err := config.Load(filename)
 	return config, err
